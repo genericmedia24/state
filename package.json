@@ -1,0 +1,47 @@
+{
+  "author": "Koen van den Boogaart <koen@genericmedia.nl>",
+  "bugs": "https://github.com/genericmedia24/state/issues",
+  "description": "State Management for HTML Elements",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "eslint": "^9.39.1",
+    "rollup": "^4.53.1",
+    "semantic-release": "^25.0.2",
+    "typescript": "^5.9.3"
+  },
+  "exports": {
+    "default": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
+  "files": [
+    "./LICENSE",
+    "./README.md",
+    "./dist"
+  ],
+  "homepage": "https://github.com/genericmedia24/state#readme",
+  "keywords": [
+    "state",
+    "html",
+    "elements",
+    "dom"
+  ],
+  "license": "MIT",
+  "name": "@genericmedia/state",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/genericmedia24/state.git"
+  },
+  "scripts": {
+    "link": "npm link ../config ../delegator",
+    "lint": "tsc && eslint src/**/*.ts *.mjs",
+    "make": "rollup -c",
+    "test": "exit 0",
+    "wake": "rollup -cw"
+  },
+  "version": "0.0.0"
+}

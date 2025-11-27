@@ -68,7 +68,7 @@ export class State<Values = unknown> implements Delegate {
     this.#elements.add(element)
   }
 
-  del<Key extends keyof Values & string>(key: Key, dispatch = true): StateDetail | undefined {
+  del<Key extends keyof Values & string>(key: Key): StateDetail | undefined {
     if (!this.exists(key)) {
       return undefined
     }
@@ -84,9 +84,7 @@ export class State<Values = unknown> implements Delegate {
       type: 'del',
     }
 
-    if (dispatch) {
-      this.dispatchEvents(detail)
-    }
+    this.dispatchEvents(detail)
 
     return detail
   }
@@ -131,7 +129,7 @@ export class State<Values = unknown> implements Delegate {
     return this.#values[key] as undefined | Values[Key]
   }
 
-  hdel<Key extends keyof Values & string, Field extends keyof Values[Key] & string>(key: Key, field: Field, dispatch = true): StateDetail | undefined {
+  hdel<Key extends keyof Values & string, Field extends keyof Values[Key] & string>(key: Key, field: Field): StateDetail | undefined {
     if (!this.hexists(key, field)) {
       return undefined
     }
@@ -150,9 +148,7 @@ export class State<Values = unknown> implements Delegate {
       type: 'hdel',
     }
 
-    if (dispatch) {
-      this.dispatchEvents(detail)
-    }
+    this.dispatchEvents(detail)
 
     return detail
   }
@@ -169,7 +165,7 @@ export class State<Values = unknown> implements Delegate {
     return (this.#values[key] as Record<string, unknown>)[field] as undefined | Values[Key][Field]
   }
 
-  hset<Key extends keyof Values & string, Field extends keyof Values[Key] & string>(key: Key, field: Field, value: Values[Key][Field], dispatch = true): StateDetail | undefined {
+  hset<Key extends keyof Values & string, Field extends keyof Values[Key] & string>(key: Key, field: Field, value: Values[Key][Field]): StateDetail | undefined {
     const object = (this.#values[key] ?? {}) as Record<string, unknown>
     const oldValue = object[field]
 
@@ -185,14 +181,12 @@ export class State<Values = unknown> implements Delegate {
       type: 'hset',
     }
 
-    if (dispatch) {
-      this.dispatchEvents(detail)
-    }
+    this.dispatchEvents(detail)
 
     return detail
   }
 
-  hsetnx<Key extends keyof Values & string, Field extends keyof Values[Key] & string>(key: Key, field: Field, value: Values[Key][Field], dispatch = true): StateDetail | undefined {
+  hsetnx<Key extends keyof Values & string, Field extends keyof Values[Key] & string>(key: Key, field: Field, value: Values[Key][Field]): StateDetail | undefined {
     if (this.hexists(key, field)) {
       return undefined
     }
@@ -212,9 +206,7 @@ export class State<Values = unknown> implements Delegate {
       type: 'hsetnx',
     }
 
-    if (dispatch) {
-      this.dispatchEvents(detail)
-    }
+    this.dispatchEvents(detail)
 
     return detail
   }
@@ -250,7 +242,7 @@ export class State<Values = unknown> implements Delegate {
     return Array.isArray(list) ? list.indexOf(value) : -1
   }
 
-  lpush<Key extends keyof Values & string>(key: Key, value: Values[Key] extends unknown[] ? Values[Key][number] : Values[Key], dispatch = true): StateDetail | undefined {
+  lpush<Key extends keyof Values & string>(key: Key, value: Values[Key] extends unknown[] ? Values[Key][number] : Values[Key]): StateDetail | undefined {
     const list = (this.#values[key] ?? []) as unknown[]
 
     list.push(value)
@@ -263,14 +255,12 @@ export class State<Values = unknown> implements Delegate {
       type: 'lpush',
     }
 
-    if (dispatch) {
-      this.dispatchEvents(detail)
-    }
+    this.dispatchEvents(detail)
 
     return detail
   }
 
-  lrem<Key extends keyof Values & string>(key: Key, value: Values[Key] extends unknown[] ? Values[Key][number] : Values[Key], dispatch = true): StateDetail | undefined {
+  lrem<Key extends keyof Values & string>(key: Key, value: Values[Key] extends unknown[] ? Values[Key][number] : Values[Key]): StateDetail | undefined {
     const index = this.lpos(key, value)
 
     if (index === -1) {
@@ -291,14 +281,12 @@ export class State<Values = unknown> implements Delegate {
       type: 'lrem',
     }
 
-    if (dispatch) {
-      this.dispatchEvents(detail)
-    }
+    this.dispatchEvents(detail)
 
     return detail
   }
 
-  lset<Key extends keyof Values & string>(key: Key, index: number, value: Values[Key] extends unknown[] ? Values[Key][number] : Values[Key], dispatch = true): StateDetail | undefined {
+  lset<Key extends keyof Values & string>(key: Key, index: number, value: Values[Key] extends unknown[] ? Values[Key][number] : Values[Key]): StateDetail | undefined {
     const list = (this.#values[key] ?? []) as unknown[]
     const oldValue = list[index]
 
@@ -313,9 +301,7 @@ export class State<Values = unknown> implements Delegate {
       type: 'lset',
     }
 
-    if (dispatch) {
-      this.dispatchEvents(detail)
-    }
+    this.dispatchEvents(detail)
 
     return detail
   }
@@ -336,7 +322,7 @@ export class State<Values = unknown> implements Delegate {
     }
   }
 
-  set<Key extends keyof Values & string>(key: Key, value: Values[Key], dispatch = true): StateDetail {
+  set<Key extends keyof Values & string>(key: Key, value: Values[Key]): StateDetail {
     const oldValue = this.#values[key]
 
     this.#values[key] = value
@@ -349,14 +335,12 @@ export class State<Values = unknown> implements Delegate {
       type: 'set',
     }
 
-    if (dispatch) {
-      this.dispatchEvents(detail)
-    }
+    this.dispatchEvents(detail)
 
     return detail
   }
 
-  setnx<Key extends keyof Values & string>(key: Key, value: Values[Key], dispatch = true): StateDetail | undefined {
+  setnx<Key extends keyof Values & string>(key: Key, value: Values[Key]): StateDetail | undefined {
     if (this.exists(key)) {
       return undefined
     }
@@ -373,9 +357,7 @@ export class State<Values = unknown> implements Delegate {
       type: 'setnx',
     }
 
-    if (dispatch) {
-      this.dispatchEvents(detail)
-    }
+    this.dispatchEvents(detail)
 
     return detail
   }
